@@ -8,9 +8,9 @@ __pycache__/
 *.pyo
 .pytest_cache/
 
-# Outputs (keep .gitkeep, ignore generated files)
-outputs/figures/*.png
-outputs/tables/*.csv
+# Outputs — committed for README display
+# outputs/figures/*.png
+# outputs/tables/*.csv
 
 # Env
 .env
