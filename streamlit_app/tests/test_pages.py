@@ -20,3 +20,9 @@ def test_model_insights_loads_without_exception():
     at = AppTest.from_file(str(_APP_DIR / "pages" / "2_Model_Insights.py"))
     at.run()
     assert not at.exception
+
+
+def test_retention_playbook_loads_without_exception():
+    at = AppTest.from_file(str(_APP_DIR / "pages" / "3_Retention_Playbook.py"))
+    at.run()
+    assert not at.exception
