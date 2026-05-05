@@ -46,34 +46,40 @@ cross_filtered = cross_df[
 col1, col2 = st.columns(2)
 
 with col1:
-    fig = px.bar(
-        card_filtered.sort_values("churn_rate"),
-        x="churn_rate",
-        y="Card Type",
-        orientation="h",
-        title="Churn Rate by Card Type",
-        labels={"churn_rate": "Churn Rate", "Card Type": ""},
-        color="Card Type",
-        color_discrete_map=CARD_COLORS,
-    )
-    fig.update_layout(showlegend=False)
-    fig.update_xaxes(tickformat=".0%")
-    st.plotly_chart(fig, use_container_width=True)
+    if not card_filtered.empty:
+        fig = px.bar(
+            card_filtered.sort_values("churn_rate"),
+            x="churn_rate",
+            y="Card Type",
+            orientation="h",
+            title="Churn Rate by Card Type",
+            labels={"churn_rate": "Churn Rate", "Card Type": ""},
+            color="Card Type",
+            color_discrete_map=CARD_COLORS,
+        )
+        fig.update_layout(showlegend=False)
+        fig.update_xaxes(tickformat=".0%")
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("No data for the selected filters.")
 
 with col2:
-    fig2 = px.bar(
-        country_filtered.sort_values("churn_rate"),
-        x="churn_rate",
-        y="Geography",
-        orientation="h",
-        title="Churn Rate by Country",
-        labels={"churn_rate": "Churn Rate", "Geography": ""},
-        color="Geography",
-        color_discrete_map=COUNTRY_COLORS,
-    )
-    fig2.update_layout(showlegend=False)
-    fig2.update_xaxes(tickformat=".0%")
-    st.plotly_chart(fig2, use_container_width=True)
+    if not country_filtered.empty:
+        fig2 = px.bar(
+            country_filtered.sort_values("churn_rate"),
+            x="churn_rate",
+            y="Geography",
+            orientation="h",
+            title="Churn Rate by Country",
+            labels={"churn_rate": "Churn Rate", "Geography": ""},
+            color="Geography",
+            color_discrete_map=COUNTRY_COLORS,
+        )
+        fig2.update_layout(showlegend=False)
+        fig2.update_xaxes(tickformat=".0%")
+        st.plotly_chart(fig2, use_container_width=True)
+    else:
+        st.info("No data for the selected filters.")
 
 st.subheader("Churn Rate Heatmap — Card Type × Country")
 if not cross_filtered.empty:
@@ -102,7 +108,15 @@ if not cross_filtered.empty:
         "avg_balance": "Avg Balance",
         "complaint_rate": "Complaint Rate",
     })
-    display["Churn Rate"] = display["Churn Rate"].map("{:.1%}".format)
-    display["Avg Balance"] = display["Avg Balance"].map("€{:,.0f}".format)
-    display["Complaint Rate"] = display["Complaint Rate"].map("{:.1%}".format)
-    st.dataframe(display, use_container_width=True, hide_index=True)
+    st.dataframe(
+        display,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Churn Rate": st.column_config.NumberColumn(format="%.1f%%"),
+            "Avg Balance": st.column_config.NumberColumn(format="€%.0f"),
+            "Complaint Rate": st.column_config.NumberColumn(format="%.1f%%"),
+        },
+    )
+else:
+    st.info("No data for the selected filters.")
