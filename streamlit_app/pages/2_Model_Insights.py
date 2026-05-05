@@ -14,7 +14,7 @@ col3.metric("DT Accuracy", "82.6%")
 col4.metric("DT ROC-AUC", "0.830")
 
 st.markdown("---")
-st.subheader("Feature Importance")
+st.subheader("Coefficients & Feature Importance")
 
 lr_df = load_lr_coefficients()
 dt_df = load_feature_importance()
