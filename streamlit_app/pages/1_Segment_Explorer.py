@@ -108,6 +108,8 @@ if not cross_filtered.empty:
         "avg_balance": "Avg Balance",
         "complaint_rate": "Complaint Rate",
     })
+    display["Churn Rate"] = display["Churn Rate"] * 100
+    display["Complaint Rate"] = display["Complaint Rate"] * 100
     st.dataframe(
         display,
         use_container_width=True,
