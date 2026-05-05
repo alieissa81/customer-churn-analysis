@@ -8,3 +8,9 @@ def test_home_loads_without_exception():
     at = AppTest.from_file(str(_APP_DIR / "app.py"))
     at.run()
     assert not at.exception
+
+
+def test_segment_explorer_loads_without_exception():
+    at = AppTest.from_file(str(_APP_DIR / "pages" / "1_Segment_Explorer.py"))
+    at.run()
+    assert not at.exception
